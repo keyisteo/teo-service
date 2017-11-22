@@ -4,10 +4,9 @@ import (
 	"image/jpeg"
 	"log"
 	"os"
-	"teo-service/resize"
 )
 
-func resizeImage(fileName string, fileRename string) {
+func ResizeImage(fileName string, fileRename string) {
 	// open "test.jpg"
 	file, err := os.Open(fileName)
 	if err != nil {
@@ -23,7 +22,7 @@ func resizeImage(fileName string, fileRename string) {
 
 	// resize to width 1000 using Lanczos resampling
 	// and preserve aspect ratio
-	m := resize.Resize(1000, 0, img, resize.Lanczos3)
+	m := Resize(1000, 0, img, Lanczos3)
 
 	out, err := os.Create(fileRename)
 	if err != nil {
@@ -33,4 +32,5 @@ func resizeImage(fileName string, fileRename string) {
 
 	// write new image to file
 	jpeg.Encode(out, m, nil)
+	os.Remove(fileName)
 }

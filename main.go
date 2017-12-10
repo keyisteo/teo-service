@@ -1,15 +1,18 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"net/http"
-	"teo-service/upload"
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/session"
+	_ "testingWebApp/routers"
 )
 
 func main() {
-	port := 8080
-	http.HandleFunc("/upload", upload.Upload)
-	log.Printf("Server starting on port %v\n", port)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", port), nil))
+	sessionconf := &session.ManagerConfig{
+		CookieName: "begoosessionID",
+		Gclifetime: 3600,
+	}
+	beego.GlobalSessions, _ = session.NewManager("memory", sessionconf)
+	go beego.GlobalSessions.GC()
+
+	beego.Run()
 }

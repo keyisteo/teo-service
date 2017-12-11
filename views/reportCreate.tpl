@@ -1,14 +1,16 @@
 
+	
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<h1>L A P O R K A N</h1>
 	<div class="row justify-content-center">
 		<div class="col-10">
 			<form runat="server" class="form-horizontal" method="POST" action="/report" enctype="multipart/form-data" id="form_report">
-		    	<input required type="hidden" class="form-control" name="id_reporter" value={{Auth::user()->id}}>
+		    	<input required type="hidden" class="form-control" name="id_reporter">
 				<div class="form-group">
 				   	<label for="picture"><h5>Foto Laporan:</h5></label>
-					<input required onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])" type="file" id="imgInp" class="form-control" name="picture">
-					<img id="blah" class="card img-thumbnail rounded mx-auto d-block" alt="Foto Laporan" />
+					<input required onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])" type="file" id="imgInp" class="form-control" name="picture"  >
+					<img id="blah" class="card img-thumbnail rounded mx-auto d-block" alt="Foto Laporan" src="/static/img/assets/image-placeholder.png" />
 				</div>
 				<div class="form-group">
 					<label for="detail"><h5>Deskripsi:</h5></label>
@@ -70,6 +72,7 @@
 
 		    reader.onload = function(e) {
 		      $('#picture-show').attr('src', e.target.result);
+		      $('#picture-show').attr('style', "");
 		    }
 
 		    reader.readAsDataURL(input.files[0]);

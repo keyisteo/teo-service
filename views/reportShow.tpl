@@ -7,11 +7,11 @@
 					<h3>Pelapor: {{ .User}}</h3>
 				</div>
 				<div class="col-8 " align="right">
-					<img src="/static/img/assets/kategori ({{$report->category}}).png" style="max-height: 70px">
+					<img src="/static/img/assets/kategori ({{.category}}).png" style="max-height: 70px">
 				</div>
 			</div>
 			<p>Tanggal Submit Laporan: {{ .Timestamp}}</p>
-			<img src="{{ URL::to('/') }}/{{$report->link_photo}}"	class="mx-auto d-block img-thumbnail" alt="Foto Laporan" style=" max-height: 400px;" />
+			<img src=""	class="mx-auto d-block img-thumbnail" alt="Foto Laporan" style=" max-height: 400px;" />
 			<h3>Detail Laporan: </h3>
 			<p>{{ .Detail}}</p>
 	</div>

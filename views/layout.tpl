@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html>
-{{template "head.tpl" .}}
 
+<head>
+{{template "head.html" .}}
+</head>
 <body>
-{{template "nav.tpl"}}
-<main role="main" class="container">
+{{template "nav.html"}}
+
 {{.LayoutContent}}
-</main>	
-{{template "footer.tpl"}}
-</body>
+
+{{template "footer.html"}}
+
+
+    </body>
 </html>
-
-
-
-
-

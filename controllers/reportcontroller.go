@@ -25,12 +25,13 @@ func (c *ReportController) Post() {
 	r.IdReporter = 1
 	r.Id = models.InsertReport(r)
 	file, _, _ := c.GetFile("picture")
+
 	if file != nil {
 		// get the filename
 		var fileName string
 		fileName = "static/img/reportImage/report_" + strconv.Itoa(r.Id) + ".jpg"
 		// save to server
-		c.SaveToFile("file", fileName)
+		c.SaveToFile("picture", fileName)
 		fmt.Println("Melewati penyimpanan file")
 		//resize
 		resize.ResizeImage(fileName, fileName)

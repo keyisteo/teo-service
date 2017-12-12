@@ -32,5 +32,4 @@ func ResizeImage(fileName string, fileRename string) {
 
 	// write new image to file
 	jpeg.Encode(out, m, nil)
-	os.Remove(fileName)
 }

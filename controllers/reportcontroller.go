@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"html/template"
 	"strconv"
 	"teo-service/models"
 	"teo-service/utils/resize"
@@ -12,15 +13,31 @@ type ReportController struct {
 }
 
 func (c *ReportController) Get() {
-	//Pass some data to the template
-	c.Data["Title"] = "Report"
-	c.TplName = "reportCreate.tpl"
+	id := 0
+	c.Ctx.Input.Bind(&id, "id")
+	if id == 0 { //Pass some data to the template
+		c.Data["xsrfdata"] = template.HTML(c.XSRFFormHTML())
+		c.Data["Title"] = "Report"
+		c.TplName = "reportCreate.tpl"
+	} else {
+		r := models.MyReport{}
+		r = models.RetrieveOneReport(id)
+		if r.Id == 0 {
+			c.Ctx.Redirect(302, "/report")
+		} else {
+			c.Show(r.Id)
+		}
+
+	}
+	return
 }
 
 func (c *ReportController) Post() {
 	r := models.MyReport{}
 	if err := c.ParseForm(&r); err != nil {
 		//handle error
+		c.Ctx.Redirect(302, "/report")
+		return
 	}
 	r.IdReporter = 1
 	r.Id = models.InsertReport(r)
@@ -38,5 +55,15 @@ func (c *ReportController) Post() {
 		r.LinkPhoto = fileName
 	}
 	models.UpdateReport(r.Id, r.LinkPhoto)
+
+	c.Ctx.Redirect(302, "/report?id="+strconv.Itoa(r.Id))
+}
+
+// @router /report/:id
+func (c *ReportController) Show(id int) {
+	r := models.RetrieveOneReport(id)
+	c.Data["Title"] = "Show Report"
+	c.Data["Report"] = r
+	c.TplName = "reportShow.tpl"
 
 }

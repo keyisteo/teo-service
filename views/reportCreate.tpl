@@ -6,6 +6,7 @@
 	<div class="row justify-content-center">
 		<div class="col-10">
 			<form runat="server" class="form-horizontal" method="POST" action="/report" enctype="multipart/form-data" id="form_report">
+				{{ .xsrfdata }}
 		    	<input required type="hidden" class="form-control" name="id_reporter">
 				<div class="form-group">
 				   	<label for="picture"><h5>Foto Laporan:</h5></label>

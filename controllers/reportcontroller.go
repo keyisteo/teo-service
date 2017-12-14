@@ -74,3 +74,16 @@ func (c *ReportController) Show(id int) {
 	c.Data["Pelapor"] = p
 	c.TplName = "reportShow.tpl"
 }
+
+func (c *ReportController) Delete() {
+	id := 0
+	c.Ctx.Input.Bind(&id, "id")
+	if id != 0 {
+		//Melakukan delet
+		fmt.Println("akan melakukan delete")
+		models.DeleteReport(id)
+		return
+	}
+	c.Ctx.Redirect(302, "/timeline")
+	return
+}

@@ -13,7 +13,7 @@ func init() {
 
 	orm.RegisterDriver("mysql", orm.DRMySQL)
 
-	orm.RegisterDataBase("default", "mysql", "root:root@/kesat?charset=utf8")
+	orm.RegisterDataBase("default", "mysql", "root:@tcp(167.205.67.251:3306)/kesat?charset=utf8")
 
 	orm.DefaultTimeLoc = time.UTC
 

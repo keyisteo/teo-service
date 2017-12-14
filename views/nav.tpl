@@ -16,7 +16,6 @@
               <a class="nav-link" href="/timeline">Linimasa</a>
             </li>
           {{else if eq .Type "1"}}
-            <a class="nav-link" href="/timeline">{{.Type}}</a>
             <li class="nav-item">
               <a class="nav-link" href="/report">Laporan</a>
             </li>

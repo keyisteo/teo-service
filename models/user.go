@@ -77,3 +77,9 @@ func RetrieveOneUser(usernm string, pwd string) User {
 		return user
 	}
 }
+func RetrieveAllUser() []User {
+	o := orm.NewOrm()
+	var u []User
+	_, _ = o.Raw("SELECT id, username FROM users").QueryRows(&u)
+	return u
+}

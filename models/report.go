@@ -7,15 +7,13 @@ import (
 )
 
 type MyReport struct {
-	Id                 int       `form:"-"`
-	IdReporter         int       `form:"-"`
-	VerificationStatus bool      `form:"-"`
-	HandleReport       int       `form:"-"`
-	Category           int       `form:"category"`
-	Detail             string    `form:"detail"`
-	LinkPhoto          string    `form:"detail"`
-	CreatedAt          time.Time `form:"-"`
-	UpdatedAt          time.Time `form:"-"`
+	Id         int       `form:"-" json:"id"`
+	IdReporter int       `form:"-" json:"id_reporter"`
+	Category   int       `form:"category" json:"category"`
+	Detail     string    `form:"detail" json:"detail"`
+	LinkPhoto  string    `form:"link_photo" json:"link_photo"`
+	CreatedAt  time.Time `form:"-" json:"create_time"`
+	UpdatedAt  time.Time `form:"-" json:"-"`
 }
 
 func init() {
@@ -59,4 +57,24 @@ func RetrieveOneReport(id int) MyReport {
 	} else {
 		return report
 	}
+}
+
+func JSONRetrieveReportById(id int) MyReport {
+	o := orm.NewOrm()
+	r := MyReport{Id: id}
+	_ = o.Read(&r)
+	return r
+}
+
+func JSONRetrieveReportAll() []MyReport {
+	o := orm.NewOrm()
+	var r []MyReport
+	_, _ = o.Raw("SELECT * FROM reports").QueryRows(&r)
+	return r
+}
+
+func DeleteReport(id int) {
+	o := orm.NewOrm()
+	r := MyReport{Id: id}
+	o.Delete(&r)
 }

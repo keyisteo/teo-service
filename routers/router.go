@@ -14,5 +14,9 @@ func init() {
 	beego.Router("/login", &controllers.LoginController{})
 	beego.Router("/logout", &controllers.LogoutController{})
 	beego.Router("/register", &controllers.RegisterController{})
-	//
+	//For JSON API
+	beego.Router("/api/label", &controllers.LabelController{})
+	beego.Router("/api/report", &controllers.APIReportController{})
+	//timeline
+	beego.Router("/timeline", &controllers.TimelineController{})
 }

@@ -1,13 +1,20 @@
 package controllers
 
 import (
-	"html/template"
+	//"html/template"
 	"teo-service/models"
 )
 
 type LoginController struct {
 	ExtendedController // Inherit our, slightly extended controller
 }
+
+// @Title getLogin
+// @Summary Show Login Page
+// @Description get html page of login
+// @Success 200 OK
+// @Failure 302 Already Login
+// @router /login [get]
 
 func (c *LoginController) Get() {
 	// Check if user is logged in
@@ -19,10 +26,17 @@ func (c *LoginController) Get() {
 		return
 	}
 	// Do input checks
-	c.Data["xsrfdata"] = template.HTML(c.XSRFFormHTML())
+	//	c.Data["xsrfdata"] = template.HTML(c.XSRFFormHTML())
 	c.Data["Title"] = "Login"
 	c.TplName = "login.tpl"
 }
+
+// @Title postLogin
+// @Summary post data to login page
+// @Description post data from form to process and authenticate user
+// @Success 200 OK
+// @Failure 302 Already Login
+// @router /login [post]
 
 func (c *LoginController) Post() {
 	// Check if user is logged in

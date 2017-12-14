@@ -1,15 +1,20 @@
 package controllers
 
 import (
-	"github.com/astaxie/beego"
+	"html/template"
 )
 
 type MainController struct {
-	beego.Controller
+	ExtendedController
 }
 
 func (c *MainController) Get() {
-	c.Data["Website"] = "beego.me"
-	c.Data["Email"] = "astaxie@gmail.com"
-	c.TplName = "index.tpl"
+	// Check if user is logged in
+	userData := c.Session.Get("UserData")
+
+	// Do input checks
+	c.Data["xsrfdata"] = template.HTML(c.XSRFFormHTML())
+	c.Data["Title"] = "Selamat Datang"
+	c.Data["userData"] = userData
+	c.TplName = "welcome.tpl"
 }

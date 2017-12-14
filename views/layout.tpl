@@ -5,7 +5,7 @@
 {{template "head.html" .}}
 </head>
 <body>
-{{template "nav.html"}}
+{{template "nav.tpl" .}}
 <div class="container">
 {{.LayoutContent}}
 </div>

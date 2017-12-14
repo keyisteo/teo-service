@@ -11,15 +11,13 @@ type LoginController struct {
 
 func (c *LoginController) Get() {
 	// Check if user is logged in
-	session := c.StartSession()
-	userData := session.Get("UserData")
+	userData := c.Session.Get("UserData")
 
 	if userData != nil {
 		// User is logged in already, display another page
 		c.Ctx.Redirect(302, "/report")
 		return
 	}
-
 	// Do input checks
 	c.Data["xsrfdata"] = template.HTML(c.XSRFFormHTML())
 	c.Data["Title"] = "Login"
@@ -28,8 +26,7 @@ func (c *LoginController) Get() {
 
 func (c *LoginController) Post() {
 	// Check if user is logged in
-	session := c.StartSession()
-	userData := session.Get("UserData")
+	userData := c.Session.Get("UserData")
 
 	if userData != nil {
 		// User is logged in already, display another page
@@ -41,17 +38,14 @@ func (c *LoginController) Post() {
 		//handle error
 	}
 	// Do input checks
-
 	user = models.RetrieveOneUser(user.Username, user.Password)
 	if user.Id == 0 {
-		c.Ctx.Redirect(302, "/report")
+		c.Ctx.Redirect(302, "/login")
 		return
 	} else {
 		// Set the userData if everything is ok
-		session.Set("UserData", user)
-		c.Data["json"] = user
-		c.ServeJSON()
-
+		c.Session.Set("UserData", user)
+		c.Ctx.Redirect(302, "/")
 	}
 
 }

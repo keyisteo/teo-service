@@ -13,23 +13,29 @@ type ReportController struct {
 }
 
 func (c *ReportController) Get() {
-	id := 0
-	c.Ctx.Input.Bind(&id, "id")
-	if id == 0 { //Pass some data to the template
-		c.Data["xsrfdata"] = template.HTML(c.XSRFFormHTML())
-		c.Data["Title"] = "Report"
-		c.TplName = "reportCreate.tpl"
-	} else {
-		r := models.MyReport{}
-		r = models.RetrieveOneReport(id)
-		if r.Id == 0 {
-			c.Ctx.Redirect(302, "/report")
+	userDataIn := c.Session.Get("UserData")
+	if userDataIn != nil {
+		userData := userDataIn.(models.User)
+		fmt.Println(userData.Username)
+		c.Data["userData"] = userData
+		id := 0
+		c.Ctx.Input.Bind(&id, "id")
+		if id == 0 { //Pass some data to the template
+			c.Data["xsrfdata"] = template.HTML(c.XSRFFormHTML())
+			c.Data["Title"] = "Report"
+			c.TplName = "reportCreate.tpl"
 		} else {
-			c.Show(r.Id)
+			r := models.MyReport{}
+			r = models.RetrieveOneReport(id)
+			if r.Id == 0 {
+				c.Ctx.Redirect(302, "/report")
+			} else {
+				c.Show(r.Id)
+			}
 		}
-
+	} else {
+		c.Ctx.Redirect(302, "/")
 	}
-	return
 }
 
 func (c *ReportController) Post() {
@@ -62,8 +68,9 @@ func (c *ReportController) Post() {
 // @router /report/:id
 func (c *ReportController) Show(id int) {
 	r := models.RetrieveOneReport(id)
+	p := models.RetriveNameBasedID(r.IdReporter)
 	c.Data["Title"] = "Show Report"
 	c.Data["Report"] = r
+	c.Data["Pelapor"] = p
 	c.TplName = "reportShow.tpl"
-
 }

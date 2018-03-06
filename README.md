@@ -20,4 +20,3 @@ Pembangunan aplikasi web dari proyek KESAT ITB dalam bahasa Golang. Website ini 
 | REST-12 | GET | /api/label | GetRequest | JSON | Mendapatkan json semua label |
 | REST-13 | GET | /api/report?id={{id}} | Bind id int | JSON | Mendapatkan json report sesuai id |
 | REST-14 | GET | /api/report | GetRequest | JSON | Mendapatkan json semua report yang ada |
- HTML and PDF
